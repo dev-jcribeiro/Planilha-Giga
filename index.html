@@ -1,121 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planilha Automatizada</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Frota</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img, #logo-impressao {
+            max-width: 200px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        @media print {
+            #logo-impressao {
+                display: block;
+                margin: 0 auto 20px auto;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Planilha de Frota</h1>
-
-    <!-- Formulário de Registro -->
-    <form id="planilha-form">
-      <label for="frota">Número Frota:</label>
-      <select id="frota" required>
-        <option value="">Selecione...</option>
-      </select>
-
-      <label for="equipamento">Equipamento:</label>
-      <select id="equipamento" required>
-        <option value="">Selecione...</option>
-      </select>
-
-      <label for="operador">Operador:</label>
-      <select id="operador" required>
-        <option value="">Selecione...</option>
-      </select>
-
-      <label for="obra">Obra:</label>
-      <select id="obra" required>
-        <option value="">Selecione...</option>
-      </select>
-
-      <label for="municipio">Município:</label>
-      <select id="municipio" required>
-        <option value="">Selecione...</option>
-      </select>
-
-      <label for="observacao">Observação:</label>
-      <textarea id="observacao" rows="3"></textarea>
-
-      <button type="submit">Salvar Registro</button>
-    </form>
-
-    <!-- Botões de Ação -->
-    <div class="actions">
-      <button onclick="imprimir()">Imprimir</button>
-      <button onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+    <div class="logo-container">
+        <img src="/mnt/data/jr-constru%C3%A7%C3%B5es-imagem.png" alt="Logo da Empresa">
     </div>
-
-    <!-- Tabela de Registros -->
-    <table id="registros">
-      <thead>
-        <tr>
-          <th>Número Frota</th>
-          <th>Equipamento</th>
-          <th>Operador</th>
-          <th>Obra</th>
-          <th>Município</th>
-          <th>Observação</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Os registros serão adicionados aqui dinamicamente -->
-      </tbody>
+    <h1>Gerenciador de Frota</h1>
+    <form id="frotaForm">
+        <input type="text" id="frota" placeholder="Frota" required>
+        <input type="text" id="equipamento" placeholder="Equipamento" required>
+        <input type="text" id="operador" placeholder="Operador" required>
+        <input type="text" id="obra" placeholder="Obra" required>
+        <input type="text" id="municipio" placeholder="Município" required>
+        <input type="text" id="responsavel" placeholder="Responsável" required>
+        <button type="submit">Adicionar</button>
+    </form>
+    
+    <img id="logo-impressao" src="/mnt/data/jr-constru%C3%A7%C3%B5es-imagem.png" alt="Logo da Empresa" style="display:none;">
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Frota</th>
+                <th>Equipamento</th>
+                <th>Operador</th>
+                <th>Obra</th>
+                <th>Município</th>
+                <th>Responsável</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaFrota"></tbody>
     </table>
+    
+    <button onclick="imprimirTabela()">Imprimir</button>
+    <button id="whatsappBtn">Enviar por WhatsApp</button>
+    <button id="emailBtn">Enviar por E-mail</button>
+    
+    <script>
+        document.getElementById("frotaForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const tabela = document.getElementById("tabelaFrota");
+            const novaLinha = tabela.insertRow();
+            const valores = ["frota", "equipamento", "operador", "obra", "municipio", "responsavel"].map(id => document.getElementById(id).value);
+            valores.forEach(valor => {
+                let celula = novaLinha.insertCell();
+                celula.textContent = valor;
+            });
+            let celulaAcoes = novaLinha.insertCell();
+            let botaoExcluir = document.createElement("button");
+            botaoExcluir.textContent = "Excluir";
+            botaoExcluir.onclick = function() { tabela.deleteRow(novaLinha.rowIndex - 1); };
+            celulaAcoes.appendChild(botaoExcluir);
+            this.reset();
+        });
 
-    <!-- Formulário para Adicionar Novos Itens -->
-    <h2>Adicionar Novos Itens</h2>
-    <form id="add-item-form">
-      <label for="tipo-item">Tipo de Item:</label>
-      <select id="tipo-item" required>
-        <option value="">Selecione...</option>
-        <option value="frota">Número Frota</option>
-        <option value="equipamento">Equipamento</option>
-        <option value="operador">Operador</option>
-        <option value="obra">Obra</option>
-        <option value="municipio">Município</option>
-      </select>
+        function imprimirTabela() {
+            document.getElementById("logo-impressao").style.display = "block";
+            window.print();
+            document.getElementById("logo-impressao").style.display = "none";
+        }
 
-      <label for="novo-item">Novo Item:</label>
-      <input type="text" id="novo-item" placeholder="Digite o novo item" required>
-
-      <button type="submit">Adicionar Item</button>
-    </form>
-
-    <!-- Formulário para Adicionar Observações -->
-    <h2>Adicionar Observação a um Item</h2>
-    <form id="add-observacao-form">
-      <label for="tipo-item-obs">Tipo de Item:</label>
-      <select id="tipo-item-obs" required>
-        <option value="">Selecione...</option>
-        <option value="frota">Número Frota</option>
-        <option value="equipamento">Equipamento</option>
-        <option value="operador">Operador</option>
-        <option value="obra">Obra</option>
-        <option value="municipio">Município</option>
-      </select>
-
-      <label for="item-obs">Item:</label>
-      <select id="item-obs" required>
-        <option value="">Selecione...</option>
-      </select>
-
-      <label for="observacao-item">Observação:</label>
-      <textarea id="observacao-item" rows="3" placeholder="Digite sua observação" required></textarea>
-
-      <button type="submit">Adicionar Observação</button>
-    </form>
-
-    <!-- Lista de Observações -->
-    <h2>Lista de Observações</h2>
-    <ul id="lista-observacoes">
-      <!-- As observações serão listadas aqui -->
-    </ul>
-  </div>
-
-  <script src="js/script.js"></script>
-</body>
-</html>
+        function enviarWhatsApp() {
+            let mensagem = "Dados da Frota:\n";
+            document.querySelectorAll("#tabelaFrota tr").forEach(row => {
+                mensagem += row.innerText + "\n";
+            });
+            let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`;
