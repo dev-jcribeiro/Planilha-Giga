@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planilha Automatizada</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Planilha de Frota</h1>
+
+    <!-- Formulário de Registro -->
+    <form id="planilha-form">
+      <label for="frota">Número Frota:</label>
+      <select id="frota" required>
+        <option value="">Selecione...</option>
+      </select>
+
+      <label for="equipamento">Equipamento:</label>
+      <select id="equipamento" required>
+        <option value="">Selecione...</option>
+      </select>
+
+      <label for="operador">Operador:</label>
+      <select id="operador" required>
+        <option value="">Selecione...</option>
+      </select>
+
+      <label for="obra">Obra:</label>
+      <select id="obra" required>
+        <option value="">Selecione...</option>
+      </select>
+
+      <label for="municipio">Município:</label>
+      <select id="municipio" required>
+        <option value="">Selecione...</option>
+      </select>
+
+      <label for="observacao">Observação:</label>
+      <textarea id="observacao" rows="3"></textarea>
+
+      <button type="submit">Salvar Registro</button>
+    </form>
+
+    <!-- Botões de Ação -->
+    <div class="actions">
+      <button onclick="imprimir()">Imprimir</button>
+      <button onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+    </div>
+
+    <!-- Tabela de Registros -->
+    <table id="registros">
+      <thead>
+        <tr>
+          <th>Número Frota</th>
+          <th>Equipamento</th>
+          <th>Operador</th>
+          <th>Obra</th>
+          <th>Município</th>
+          <th>Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Os registros serão adicionados aqui dinamicamente -->
+      </tbody>
+    </table>
+
+    <!-- Formulário para Adicionar Novos Itens -->
+    <h2>Adicionar Novos Itens</h2>
+    <form id="add-item-form">
+      <label for="tipo-item">Tipo de Item:</label>
+      <select id="tipo-item" required>
+        <option value="">Selecione...</option>
+        <option value="frota">Número Frota</option>
+        <option value="equipamento">Equipamento</option>
+        <option value="operador">Operador</option>
+        <option value="obra">Obra</option>
+        <option value="municipio">Município</option>
+      </select>
+
+      <label for="novo-item">Novo Item:</label>
+      <input type="text" id="novo-item" placeholder="Digite o novo item" required>
+
+      <button type="submit">Adicionar Item</button>
+    </form>
+
+    <!-- Formulário para Adicionar Observações -->
+    <h2>Adicionar Observação a um Item</h2>
+    <form id="add-observacao-form">
+      <label for="tipo-item-obs">Tipo de Item:</label>
+      <select id="tipo-item-obs" required>
+        <option value="">Selecione...</option>
+        <option value="frota">Número Frota</option>
+        <option value="equipamento">Equipamento</option>
+        <option value="operador">Operador</option>
+        <option value="obra">Obra</option>
+        <option value="municipio">Município</option>
+      </select>
+
+      <label for="item-obs">Item:</label>
+      <select id="item-obs" required>
+        <option value="">Selecione...</option>
+      </select>
+
+      <label for="observacao-item">Observação:</label>
+      <textarea id="observacao-item" rows="3" placeholder="Digite sua observação" required></textarea>
+
+      <button type="submit">Adicionar Observação</button>
+    </form>
+
+    <!-- Lista de Observações -->
+    <h2>Lista de Observações</h2>
+    <ul id="lista-observacoes">
+      <!-- As observações serão listadas aqui -->
+    </ul>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

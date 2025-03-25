@@ -1,0 +1,38 @@
+/* Estilos existentes */
+
+/* Novos estilos */
+#add-observacao-form {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  #add-observacao-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  #add-observacao-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #lista-observacoes {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #lista-observacoes li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
